@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import GoogleMapView, { PROVIDER_GOOGLE, Region } from 'react-native-maps';
+import MapView, { Region } from 'react-native-maps';
 import isEqual from 'lodash.isequal';
 
 import { ClusterMarker } from './cluster-marker';
@@ -22,7 +22,7 @@ export class ClusterMap extends React.PureComponent<
   public static defaultProps: Partial<IClusterMapProps> = {
     isClusterExpandClick: true,
   };
-  public mapRef: GoogleMapView;
+  public mapRef: MapView;
   public state: IClusterMapState = {
     markers: [],
     isMapLoaded: false,
@@ -33,18 +33,17 @@ export class ClusterMap extends React.PureComponent<
     const { style, region, priorityMarker } = this.props;
 
     return (
-      <GoogleMapView
+      <MapView
         {...utils.serializeProps(this.props)}
         ref={(ref) => (this.mapRef = ref)}
         style={style || styles.map}
         onMapReady={this.onMapReady}
         initialRegion={region}
         onRegionChangeComplete={this.onRegionChangeComplete}
-        provider={PROVIDER_GOOGLE}
       >
         {this.state.isMapLoaded && this.renderMarkers()}
         {priorityMarker ? priorityMarker : null}
-      </GoogleMapView>
+      </MapView>
     );
   }
 
